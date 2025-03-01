@@ -119,8 +119,8 @@
             loadingElement.style.display = 'block';
             outputElement.textContent = "Processing...";
             
-            // Use the provided API
-            const response = await fetch('https://kaiz-apis.gleeze.com/api/humanizer?q=' + encodeURIComponent(inputText));
+            // Use our server's proxy endpoint instead of direct API call
+            const response = await fetch('/api/humanize?q=' + encodeURIComponent(inputText));
             const data = await response.json();
             
             // Hide loading indicator
