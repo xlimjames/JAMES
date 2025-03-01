@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Humanizer</title>
+  <title>humanizer</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
   <style>
     body {
@@ -12,6 +12,17 @@
       padding: 0;
       background-color: #fce4ec;
       color: #333;
+    }
+    .credits {
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+      background-color: #f8bbd0;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .container {
       max-width: 600px;
@@ -57,6 +68,7 @@
       background-color: #f8bbd0;
       border-radius: 10px;
       border: 2px solid #f48fb1;
+      position: relative; /* Add position relative */
     }
     .output h3 {
       margin-top: 0;
@@ -84,22 +96,42 @@
         button { font-size: 16px; }
         textarea { font-size: 14px; }
     }
+
+    /* Style for the copy button */
+    #copyButton {
+      position: center;
+      top: 10px;
+      right: 10px;
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      border-radius: 2px;
+      padding: 2px 2px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+
+    #copyButton:hover {
+      background-color: #c2185b;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Text Humanizer</h1>
+    <h1><strong>text humanizer</strong></h1>
     <textarea id="inputText" rows="5" placeholder="Enter your AI-generated text here..."></textarea>
-    <button onclick="humanizeText()">Humanize Text</button>
-    
+    <button onclick="humanizeText()">humanize</button>
+
     <div id="loading">
       <div class="spinner"></div>
-      <p>Humanizing your text...</p>
+      <p>humanizing your text...</p>
     </div>
-    
+
     <div class="output" id="output">
-      <h3>Humanized Output:</h3>
-      <p id="humanizedText">Your humanized text will appear here...</p>
+      <h3>humanized output:</h3>
+      <p id="humanizedText">your humanized text will appear here...</p>
+      <button id="copyButton" onclick="copyText()">copy text</button> <!-- Copy button added -->
     </div>
   </div>
 
@@ -118,14 +150,14 @@
             // Show loading indicator
             loadingElement.style.display = 'block';
             outputElement.textContent = "Processing...";
-            
-            // Use our server's proxy endpoint instead of direct API call
+
+            // Use the provided API
             const response = await fetch('/api/humanize?q=' + encodeURIComponent(inputText));
             const data = await response.json();
-            
+
             // Hide loading indicator
             loadingElement.style.display = 'none';
-            
+
             if (data.response) {
                 outputElement.textContent = data.response;
             } else {
@@ -138,6 +170,31 @@
             outputElement.textContent = "Error: " + error.message;
         }
     }
+
+    function copyText() {
+      const textToCopy = document.getElementById('humanizedText').textContent;
+
+      if (textToCopy) {
+        navigator.clipboard.writeText(textToCopy)
+          .then(() => {
+            alert('Text copied to clipboard!');
+          })
+          .catch(err => {
+            console.error('Failed to copy text: ', err);
+            alert('Failed to copy text: ' + err);
+          });
+      } else {
+        alert('No text to copy!');
+      }
+    }
 </script>
+
+  <div class="credits">
+    <h3>Credits</h3>
+    <p>Created by <strong>James Lim</strong></p>
+    <p>Facebook: <a href="https://facebook.com/@imlimsemaj" target="_blank">facebook.com/@imlimsemaj</a></p>
+    <p>Date: March 01, 2025</p>
+  </div>
+  
 </body>
 </html>
