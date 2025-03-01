@@ -17,7 +17,7 @@ deploymentTarget = "cloudrun"
 ignorePorts = false
 
 [workflows]
-runButton = "Static"
+runButton = "Node Server"
 
 [[workflows.workflow]]
 name = "Static"
@@ -26,6 +26,14 @@ author = 40116824
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npx serve"
+
+[[workflows.workflow]]
+name = "Node Server"
+author = 40116824
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node server.js"
 
 [[ports]]
 localPort = 3000
