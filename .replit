@@ -12,6 +12,21 @@ channel = "stable-24_05"
 language = "nodejs"
 
 [deployment]
-run = ["node", "index.js"]
+run = ["sh", "-c", "npx serve"]
 deploymentTarget = "cloudrun"
 ignorePorts = false
+
+[workflows]
+runButton = "Static"
+
+[[workflows.workflow]]
+name = "Static"
+author = 40116824
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx serve"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
